@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+New ticket
+{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Новая заявка</h1>
+
+    <form action="/create_ticket" method="post">
+        <p>
+            <select name="org" class="form-select">
+                {% for org in organizations %}
+                <option value="{{ org.name }}">{{ org.name }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            <input name="name" placeholder="Заголовок" class="form-control">
+        </p>
+        <p>
+            <textarea name="content" placeholder="Описание" class="form-control" rows="3">+</textarea>
+        </p>
+        <p>
+            <input name="user_number" type="number" value="0" placeholder="Внутренний номер пользователя"
+                   class="form-control">
+        </p>
+        <p>
+            <input name="from_telegram" type="checkbox"> Из Телеграм
+        </p>
+        <button class="btn btn-success" type="submit">Сохранить</button>
+    </form>
+</div>
+
+{% endblock %}

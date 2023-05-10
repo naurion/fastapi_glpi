@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "fastapi-glpi"
+version = "0.1.0"
+description = ""
+authors = ["Sergey McArov <naurion@yandex.ru>"]
+readme = "README.md"
+#packages = [{include = "fastapi_glpi"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = {extras = ["all"], version = "^0.95.1"}
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.12"}
+alembic = "^1.10.4"
+asyncpg = "^0.27.0"
+psycopg2 = "^2.9.6"
+telebot = "^0.0.5"
+gunicorn = "^20.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

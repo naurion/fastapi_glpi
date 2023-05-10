@@ -1,0 +1,17 @@
+header, footer{
+    background: #8cc60f;
+    background: -moz-linear-gradient(left, #8cc60f 0%, #299a0b 100%);
+    background: -webkit-linear-gradient(left, #8cc60f 0%,#299a0b 100%);
+    background: linear-gradient(to right, #8cc60f 0%,#299a0b 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8cc60f', endColorstr='#299a0b',GradientType=1 );
+}
+
+main{
+    margin-left: 0px
+}
+
+form {
+    width: 500px
+}
+
+
