@@ -2,3 +2,4 @@
 .venv
 .idea
 __pycache__
+fastapi_glpi.db
