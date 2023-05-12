@@ -11,6 +11,14 @@ from app.glpi_manager.models import Ticket, Organization
 from app.utils.telegram_bot_manager import send_message
 from app.utils.glpi import add_ticket
 
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+CREATE_TICKET = os.getenv('CREATE_TICKET')
+
+
 app = FastAPI()
 
 app.mount('/static', StaticFiles(directory='app/static'), name='static')
@@ -48,7 +56,10 @@ async def create_ticket(request: Request, org: str = Form(),
     ticket = Ticket(name=name, content=content, user_number=user_number, from_telegram=from_telegram,
                     organization=organization)
     session.add(ticket)
-    # add_ticket(ticket)
+
+    if CREATE_TICKET:
+        add_ticket(ticket)
+
     session.commit()
     send_message(ticket)
 
