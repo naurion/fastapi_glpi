@@ -9,18 +9,15 @@ New ticket
     <h1>Новая организация</h1>
     <form action="/create_organization" method="post">
         <div class="mb-3">
-            <p>
-                <input name="name" type="text" placeholder="Имя организации" class="form-control">
-            </p>
-            <p>
-                <input name="glpi_id" type="number" value="0" placeholder="Идентификатор организации в GLPI" class="form-control">
-            </p>
-            <p>
-                <input name="station_number" type="number" value="0" placeholder="Номер станции" class="form-control">
-            </p>
-            <p>
-                <input name="phone_number" type="number" value="0" placeholder="Номер телефона" class="form-control">
-            </p>
+            <p>Имя организации:</p>
+            <input name="name" type="text" placeholder="Имя организации" class="form-control">
+            <p>Идентификатор организации в GLPI:</p>
+            <input name="glpi_id" type="number" value="0" placeholder="Идентификатор организации в GLPI"
+                   class="form-control">
+            <p>Номер станции:</p>
+            <input name="station_number" type="number" value="0" placeholder="Номер станции" class="form-control">
+            <p>Номер телефона:</p>
+            <input name="phone_number" type="number" value="0" placeholder="Номер телефона" class="form-control">
             <button class="btn btn-success" type="submit">Сохранить</button>
         </div>
     </form>

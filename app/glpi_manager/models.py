@@ -42,7 +42,7 @@ class Ticket(Base):
     content: Mapped[str] = mapped_column(String, default='+')
     status: Mapped[str] = mapped_column(String, default=Status.SOLVED.value)
     created_at: Mapped[str] = mapped_column(String, default=datetime.utcnow())
-    user_number: Mapped[int | None]
+    user_number: Mapped[str | None]
     from_telegram: Mapped[bool] = mapped_column(Boolean, default=False)
 
     organization_id: Mapped[int] = mapped_column(ForeignKey('organizations.id'))

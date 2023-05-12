@@ -11,5 +11,5 @@ class Ticket(BaseModel):
     name: str
     content: str
     organization: Organization
-    user_number: int | None = None
+    user_number: str | None = None
     from_telegram: bool
