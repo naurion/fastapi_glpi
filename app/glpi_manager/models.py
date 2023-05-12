@@ -2,7 +2,7 @@ from datetime import datetime
 from enum import Enum
 from typing import List
 
-from sqlalchemy import ForeignKey, String, Integer, Boolean
+from sqlalchemy import ForeignKey, String, Integer, Boolean, func
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 
@@ -41,7 +41,7 @@ class Ticket(Base):
     name: Mapped[str] = mapped_column((String(128)))
     content: Mapped[str] = mapped_column(String, default='+')
     status: Mapped[str] = mapped_column(String, default=Status.SOLVED.value)
-    created_at: Mapped[str] = mapped_column(String, default=datetime.utcnow())
+    created_at: Mapped[datetime] = mapped_column(insert_default=func.now())
     user_number: Mapped[str | None]
     from_telegram: Mapped[bool] = mapped_column(Boolean, default=False)
 

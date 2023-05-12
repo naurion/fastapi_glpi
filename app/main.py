@@ -48,7 +48,7 @@ async def create_ticket(request: Request, org: str = Form(),
     ticket = Ticket(name=name, content=content, user_number=user_number, from_telegram=from_telegram,
                     organization=organization)
     session.add(ticket)
-    add_ticket(ticket)
+    # add_ticket(ticket)
     session.commit()
     send_message(ticket)
 
