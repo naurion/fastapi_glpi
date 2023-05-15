@@ -1,11 +1,32 @@
 version: '3.9'
+
 services:
-  app:
-    build:
-      context: .
+  db:
+    container_name: "db"
+    image: postgres:15-alpine
+    restart: always
     env_file:
       - .env
-    container_name: fastapi_glpi
-    command: ["/fastapi_glpi/docker/app.sh"]
     ports:
-      - 9999:8000
+      - "5432:5432"
+    networks:
+      - custom
+  
+  app:
+    build:
+     context: .
+    env_file:
+    - .env
+    container_name: fastapi_glpi
+    command: [ "/fastapi_glpi/docker/app.sh" ]
+    ports:
+     - 9999:8000
+    depends_on:
+     - db
+    networks:
+      - custom
+
+networks:
+  custom:
+    driver: bridge
+

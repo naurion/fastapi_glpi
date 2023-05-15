@@ -5,7 +5,7 @@ from app.glpi_manager.models import Ticket
 
 
 def connect_db():
-    engine = create_engine(f"sqlite:///fastapi_glpi.db", echo=True, pool_size=10,
+    engine = create_engine(f"postgresql://postgres:postgres@db/postgres", echo=True, pool_size=10,
                            max_overflow=20)
     session = Session(engine)
     return session

@@ -57,7 +57,7 @@ async def create_ticket(request: Request, org: str = Form(),
                     organization=organization)
     session.add(ticket)
 
-    if CREATE_TICKET:
+    if CREATE_TICKET == '1':
         add_ticket(ticket)
 
     session.commit()
