@@ -13,14 +13,8 @@ CHAT_ID = os.getenv('CHAT_ID')
 bot = telebot.TeleBot(TOKEN)
 
 
-def send_message(ticket: Ticket, url):
-    if ticket.from_telegram:
-        message = f'Заявка:\nОрганизация: {ticket.organization.name}\nИз Телеграм\nЗаголовок: {ticket.name}\nОписание: {ticket.content}'
-    else:
-        message = f'Заявка:\nОрганизация: {ticket.organization.name}\nНомер пользователя: {ticket.user_number}\nЗаголовок: {ticket.name}\nОписание: {ticket.content}'
-
+def send_message(message, url):
     message = f'{message}\n{url}'
-
     bot.send_message(CHAT_ID, message)
 
 

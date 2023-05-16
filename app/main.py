@@ -14,7 +14,7 @@ from app.utils.glpi import add_ticket
 from dotenv import load_dotenv
 import os
 
-from glpi_manager.forms import GLPI_Response
+from app.glpi_manager.forms import GLPI_Response
 
 load_dotenv()
 
@@ -61,11 +61,12 @@ async def create_ticket(request: Request, org: str = Form(),
 
     if CREATE_TICKET == '1':
         response = add_ticket(ticket)
+
     glpi_response = GLPI_Response.parse_raw(response.text)
     url = f'https://helpdesk.integrasky.ru/front/ticket.form.php?id={glpi_response.id}'
 
     session.commit()
-    send_message(ticket, url)
+    send_message(glpi_response.message, url)
 
     return templates.TemplateResponse('new_ticket.html', context={'request': request, 'tickets': tickets})
     session.close()
