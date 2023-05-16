@@ -19,6 +19,7 @@ from app.glpi_manager.forms import GLPI_Response
 load_dotenv()
 
 CREATE_TICKET = os.getenv('CREATE_TICKET')
+TICKET_URL = os.getenv('TICKET_URL')
 
 
 app = FastAPI()
@@ -63,7 +64,7 @@ async def create_ticket(request: Request, org: str = Form(),
         response = add_ticket(ticket)
 
     glpi_response = GLPI_Response.parse_raw(response.text)
-    url = f'https://helpdesk.integrasky.ru/front/ticket.form.php?id={glpi_response.id}'
+    url = f'{TICKET_URL}?id={glpi_response.id}'
 
     session.commit()
     send_message(glpi_response.message, url)
