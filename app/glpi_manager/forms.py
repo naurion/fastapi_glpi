@@ -13,3 +13,7 @@ class Ticket(BaseModel):
     organization: Organization
     user_number: str | None = None
     from_telegram: bool
+
+class GLPI_Response(BaseModel):
+    id: int
+    message: str

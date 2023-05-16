@@ -2,7 +2,7 @@ import requests
 from dotenv import load_dotenv
 import os
 
-from app.glpi_manager.models import Ticket
+from app.glpi_manager.models import Ticket, Organization
 
 load_dotenv()
 
@@ -66,4 +66,9 @@ def add_ticket(ticket: Ticket):
 
 
 if __name__ == '__main__':
-    token = get_session_token()
+    organization = Organization(name='Integrasky', glpi_id=0, station_number='911')
+
+    ticket = Ticket(name='Test', content='Test', user_number='765', from_telegram=False,
+                    organization=organization)
+    response = add_ticket(ticket)
+    print(response.text)
