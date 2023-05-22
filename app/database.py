@@ -16,13 +16,18 @@ async def get_all_tickets():
 
 
 async def get_all_org():
-    return connect_db().scalars(select(Organization).order_by(desc(Organization.name))).all()
+    session = connect_db()
+    query = select(Organization).order_by(Organization.name)
+    organizations = session.scalars(query).all()
+    session.close()
+    return organizations
 
 
-async def create_organization(organization: Organization):
+async def create_org(organization: Organization):
     session = connect_db()
     session.add(organization)
     session.commit()
+    session.close()
 
 
 

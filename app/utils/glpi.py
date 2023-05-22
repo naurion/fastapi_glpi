@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 import os
 
 from app.glpi_manager.models import Ticket
-from glpi_manager.forms import Organization
 
 load_dotenv()
 

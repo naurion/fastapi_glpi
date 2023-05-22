@@ -5,7 +5,7 @@ from fastapi.responses import HTMLResponse
 
 from sqlalchemy import select
 
-from app.database import connect_db, get_all_tickets, get_all_org
+from app.database import connect_db, get_all_tickets, create_org
 from app.glpi_manager.models import Ticket, Organization
 
 from app.utils.telegram_bot_manager import send_message
@@ -21,7 +21,6 @@ load_dotenv()
 CREATE_TICKET = os.getenv('CREATE_TICKET')
 TICKET_URL = os.getenv('TICKET_URL')
 
-
 app = FastAPI()
 
 app.mount('/static', StaticFiles(directory='app/static'), name='static')
@@ -30,15 +29,17 @@ templates = Jinja2Templates(directory='app/static/templates')
 
 
 @app.get('/index')
-async def index(request: Request, tickets = Depends(get_all_tickets)):
+async def index(request: Request, tickets=Depends(get_all_tickets)):
     return templates.TemplateResponse('index.html', context={'request': request, 'tickets': tickets})
 
 
 @app.get('/create_ticket', response_class=HTMLResponse)
 async def create_ticket(request: Request):
     session = connect_db()
-
-    organizations = get_all_org
+    query = select(Organization).order_by(Organization.name)
+    organizations = session.scalars(query).all()
+    session.close()
+    # organizations = get_all_org()
 
     return templates.TemplateResponse('new_ticket.html', context={'request': request, 'organizations': organizations})
 
@@ -84,10 +85,6 @@ async def create_organization(request: Request, name: str = Form(),
                               phone_number: int | None = Form(default=None),
                               ):
     org = Organization(name=name, glpi_id=glpi_id, station_number=station_number, phone_number=phone_number)
-
-    session = connect_db()
-    session.add(org)
-    session.commit()
-    session.close()
+    create_org(org)
 
     return templates.TemplateResponse('new_organization.html', context={'request': request, 'name': name})
