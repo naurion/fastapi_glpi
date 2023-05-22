@@ -11,11 +11,11 @@ def connect_db():
     return session
 
 
-async def get_all_tickets():
+def get_all_tickets():
     return connect_db().scalars(select(Ticket).order_by(desc(Ticket.created_at))).all()
 
 
-async def get_all_org():
+def get_all_org():
     session = connect_db()
     query = select(Organization).order_by(Organization.name)
     organizations = session.scalars(query).all()
@@ -23,7 +23,7 @@ async def get_all_org():
     return organizations
 
 
-async def create_org(organization: Organization):
+def create_org(organization: Organization):
     session = connect_db()
     session.add(organization)
     session.commit()
@@ -31,5 +31,5 @@ async def create_org(organization: Organization):
 
 
 
-async def get_org_by_glpi_id(glpi_id):
+def get_org_by_glpi_id(glpi_id):
     return connect_db().scalars(select(Organization).where(Organization.glpi_id == glpi_id))
