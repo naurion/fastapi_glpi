@@ -2,7 +2,7 @@ import requests
 from dotenv import load_dotenv
 import os
 
-from app.glpi_manager.models import Ticket, Organization
+from app.glpi_manager.models import Ticket
 
 load_dotenv()
 

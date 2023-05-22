@@ -3,8 +3,6 @@ import telebot
 from dotenv import load_dotenv
 import os
 
-from app.glpi_manager.models import Ticket
-
 load_dotenv()
 
 TOKEN = os.getenv('TOKEN')
