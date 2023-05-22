@@ -5,7 +5,7 @@ from fastapi.responses import HTMLResponse
 
 from sqlalchemy import select
 
-from app.database import connect_db, get_all_tickets
+from app.database import connect_db, get_all_tickets, get_all_org
 from app.glpi_manager.models import Ticket, Organization
 
 from app.utils.telegram_bot_manager import send_message
@@ -38,8 +38,7 @@ async def index(request: Request, tickets = Depends(get_all_tickets)):
 async def create_ticket(request: Request):
     session = connect_db()
 
-    query = select(Organization)
-    organizations = session.scalars(query).all()
+    organizations = get_all_org
 
     return templates.TemplateResponse('new_ticket.html', context={'request': request, 'organizations': organizations})
 

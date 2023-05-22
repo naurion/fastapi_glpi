@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 
 from app.glpi_manager.models import Ticket
+from glpi_manager.forms import Organization
 
 load_dotenv()
 
@@ -65,32 +66,6 @@ def add_ticket(ticket: Ticket):
     return response
 
 
-def get_organizations():
-    session_token = get_session_token()
-
-    headers = {
-        'Content-Type': 'application/json',
-        'Session-Token': session_token,
-        'App-Token': APP_TOKEN
-    }
-    url = f'https://helpdesk.integrasky.ru/apirest.php/Entity/[0]/Entities'
-    r = requests.get(url, headers=headers)
-
-    # for id in range(0, 150):
-    #
-    #     url = f'https://helpdesk.integrasky.ru/apirest.php/Entity/{id}/'
-    #     r = requests.get(url, headers=headers)
-    #
-    #     if r.status_code == 200:
-    #         json_data = r.json()
-    #
-    #         if not '[Не в обслуживании]' in json_data['name']:
-    #
-
-    close_session(session_token)
-
-
-
 if __name__ == '__main__':
     # organization = Organization(name='Integrasky', glpi_id=0, station_number='911')
     #
@@ -98,4 +73,4 @@ if __name__ == '__main__':
     #                 organization=organization)
     # response = add_ticket(ticket)
     # print(response.text)
-    get_organizations()
+    pass
