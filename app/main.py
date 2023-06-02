@@ -45,8 +45,7 @@ async def create_ticket(request: Request, org: str = Form(),
                         name: str = Form(),
                         content: str = Form(),
                         user_number: int = Form(),
-                        from_telegram: bool = Form(default=False),
-                        tickets=Depends(get_all_tickets)
+                        from_telegram: bool = Form(default=False)
                         ):
     session = connect_db()
     query = select(Organization).where(Organization.name == org)
@@ -55,18 +54,18 @@ async def create_ticket(request: Request, org: str = Form(),
     ticket = Ticket(name=name, content=content, user_number=user_number, from_telegram=from_telegram,
                     organization=organization)
     session.add(ticket)
+    session.commit()
+    session.close()
 
     if CREATE_TICKET == '1':
         response = add_ticket(ticket)
+        glpi_response = GLPI_Response.parse_raw(response.text)
+        url = f'{TICKET_URL}?id={glpi_response.id}'
+        send_message(glpi_response.message, url)
+        
+    tickets = get_all_tickets()
 
-    glpi_response = GLPI_Response.parse_raw(response.text)
-    url = f'{TICKET_URL}?id={glpi_response.id}'
-
-    session.commit()
-    send_message(glpi_response.message, url)
-
-    return templates.TemplateResponse('new_ticket.html', context={'request': request, 'tickets': tickets})
-    session.close()
+    return templates.TemplateResponse('index.html', context={'request': request, 'tickets': tickets})
 
 
 @app.get('/create_organization')
@@ -83,4 +82,6 @@ async def create_organization(request: Request, name: str = Form(),
     org = Organization(name=name, glpi_id=glpi_id, station_number=station_number, phone_number=phone_number)
     create_org(org)
 
-    return templates.TemplateResponse('new_organization.html', context={'request': request, 'name': name})
+    tickets = get_all_tickets()
+
+    return templates.TemplateResponse('index.html', context={'request': request, 'tickets': tickets})
