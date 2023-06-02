@@ -55,14 +55,15 @@ async def create_ticket(request: Request, org: str = Form(),
                     organization=organization)
     session.add(ticket)
     session.commit()
-    session.close()
 
     if CREATE_TICKET == '1':
         response = add_ticket(ticket)
         glpi_response = GLPI_Response.parse_raw(response.text)
         url = f'{TICKET_URL}?id={glpi_response.id}'
         send_message(glpi_response.message, url)
-        
+
+    session.close()
+
     tickets = get_all_tickets()
 
     return templates.TemplateResponse('index.html', context={'request': request, 'tickets': tickets})
