@@ -17,6 +17,8 @@ Index page
         <th>Номер</th>
         <th>Заголовок</th>
         <th>Описание</th>
+        <th>Ссылка</th>
+
     </tr>
     </thead>
     <tbody class="table-group-divider">
@@ -27,8 +29,10 @@ Index page
         <th>{{ ticket.user_number }}</th>
         <th>{{ ticket.name }}</th>
         <th>{{ ticket.content }}</th>
+        <th><a href="{{ ticket.glpi_url }}">Ссылка</a></th>
     </tr>
     </tbody>
     {% endfor %}
 </table>
 {% endblock %}
+

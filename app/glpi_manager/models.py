@@ -44,6 +44,7 @@ class Ticket(Base):
     created_at: Mapped[datetime] = mapped_column(insert_default=func.now())
     user_number: Mapped[str | None]
     from_telegram: Mapped[bool] = mapped_column(Boolean, default=False)
+    glpi_url: Mapped[str] = mapped_column(String, default='', nullable=True)
 
     organization_id: Mapped[int] = mapped_column(ForeignKey('organizations.id'))
     organization: Mapped['Organization'] = relationship(back_populates="tickets")

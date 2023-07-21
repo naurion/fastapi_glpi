@@ -2,7 +2,6 @@ import requests
 from dotenv import load_dotenv
 import os
 
-from app.glpi_manager.models import Ticket
 
 load_dotenv()
 
@@ -33,23 +32,23 @@ def close_session(session_token):
     r = requests.get(f'{URL}killSession', headers=headers)
 
 
-def add_ticket(ticket: Ticket):
+def add_ticket(name, content, user_number, from_telegram, organization):
     session_token = get_session_token()
     headers = {
         'Session-Token': session_token,
         'App-Token': APP_TOKEN
     }
 
-    entities_id = ticket.organization.glpi_id
+    entities_id = organization.glpi_id
 
-    if ticket.from_telegram:
-        name = f'{ticket.organization.name}, из Телеграм: {ticket.name}'
+    if from_telegram:
+        name = f'{organization.name}, из Телеграм: {name}'
     else:
-        name = f'{ticket.organization.name}, {ticket.organization.station_number}{ticket.user_number}: {ticket.name}'
+        name = f'{organization.name}, {organization.station_number}{user_number}: {name}'
 
     item = {'input': {
         'name': name,
-        'content': ticket.content,
+        'content': content,
         '_users_id_assign': 104,  # user id
         '_users_id_requester': 104,  # user id
         # '_groups_id_assign': 1,

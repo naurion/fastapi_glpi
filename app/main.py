@@ -51,18 +51,20 @@ async def create_ticket(request: Request, org: str = Form(),
     query = select(Organization).where(Organization.name == org)
     organization = session.scalars(query).one_or_none()
 
-    ticket = Ticket(name=name, content=content, user_number=user_number, from_telegram=from_telegram,
-                    organization=organization)
-    session.add(ticket)
-    session.commit()
-
     if CREATE_TICKET == '1':
-        response = add_ticket(ticket)
+        response = add_ticket(name=name, content=content, user_number=user_number, from_telegram=from_telegram, organization=organization)
         glpi_response = GLPI_Response.parse_raw(response.text)
         url = f'{TICKET_URL}?id={glpi_response.id}'
         send_message(glpi_response.message, url)
 
+
+    ticket = Ticket(name=name, content=content, user_number=user_number, from_telegram=from_telegram,
+                    organization=organization, glpi_url=url)
+    session.add(ticket)
+    session.commit()
+
     session.close()
+
 
     tickets = get_all_tickets()
 
