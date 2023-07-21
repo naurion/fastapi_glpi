@@ -25,8 +25,8 @@ Index page
     {% for ticket in tickets %}
     <tr>
         <th class="text-nowrap">{{ ticket.created_at }}</th>
-        <th>{{ ticket.organization.name }}</th>
-        <th>{{ ticket.user_number }}</th>
+        <th class="text-nowrap">{{ ticket.organization.name }}</th>
+        <th class="text-nowrap">{{ ticket.user_number }}</th>
         <th>{{ ticket.name }}</th>
         <th>{{ ticket.content }}</th>
         <th><a href="{{ ticket.glpi_url }}">Ссылка</a></th>
