@@ -44,7 +44,7 @@ async def create_ticket(request: Request):
 async def create_ticket(request: Request, org: str = Form(),
                         name: str = Form(),
                         content: str = Form(),
-                        user_number: int = Form(),
+                        user_number: str = Form(),
                         from_telegram: bool = Form(default=False)
                         ):
     session = connect_db()
@@ -79,8 +79,8 @@ async def create_organization(request: Request):
 @app.post('/create_organization')
 async def create_organization(request: Request, name: str = Form(),
                               glpi_id: int = Form(),
-                              station_number: int | None = Form(default=None),
-                              phone_number: int | None = Form(default=None),
+                              station_number: str | None = Form(default=None),
+                              phone_number: str | None = Form(default=None),
                               ):
     org = Organization(name=name, glpi_id=glpi_id, station_number=station_number, phone_number=phone_number)
     create_org(org)
