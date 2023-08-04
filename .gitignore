@@ -3,3 +3,4 @@
 .idea
 __pycache__
 fastapi_glpi.db
+launch.json
